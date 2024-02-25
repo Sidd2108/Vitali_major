@@ -8,9 +8,6 @@ app = Flask(__name__)
 product_df = pd.read_csv("backend\converted_products.csv")
 allowed_values_df = pd.read_csv("backend\dietary_Allowances.csv")
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
 
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():

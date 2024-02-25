@@ -1,0 +1,6 @@
+# Input: Gender, Category and Ingredient List
+gender = "Female"  # gender input
+ingredient_list = {"PROTEIN": 23000, "MAGNESIUM": 0, "FOLATE": 32, 'VITAMIN B12':0.60, 'VITAMIN A':1.20}  # Example ingredient input
+category = "WHEY PROTEIN" #Category input
+
+//Copy the inputs into json format and send post request to flask server.

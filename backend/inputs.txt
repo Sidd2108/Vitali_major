@@ -3,29 +3,6 @@ gender = "Female"  # gender input
 ingredient_list = {"PROTEIN": 23000, "MAGNESIUM": 0, "FOLATE": 32, 'VITAMIN B12':0.60, 'VITAMIN A':1.20}  # Example ingredient input
 category = "WHEY PROTEIN" #Category input
 
-input_string = "
-Calories
-Total Carbohydrates
-Sugars
-Vitamin C (Ascorbic Acid)
-Vitamin E (as Alpha Tocopherol Acetate)
-Niacin
-Vitamin B6 (as Pyridoxine Hydrochloride)
-Vitamin B12 (as Methylcobalamin)
-Calcium (as Silicate, Phosphate and Citrate)
-Sodium
-Potassium
-10
-3g
-29
-500 mg
-200 IU
-60 mg
-15 mg
-90 mcg
-152 mg
-50 mg
-40 mg
-"
+input_string = "Calories Total Carbohydrates Sugars Vitamin C (Ascorbic Acid) Vitamin E (as Alpha Tocopherol Acetate) Niacin Vitamin B6 (as Pyridoxine Hydrochloride) Vitamin B12 (as Methylcobalamin) Calcium (as Silicate, Phosphate and Citrate) Sodium Potassium 10 3g 29 500 mg 200 IU 60 mg 15 mg 90 mcg 152 mg 50 mg 40 mg"
 
 //Copy the inputs into json format and send post request to flask server.

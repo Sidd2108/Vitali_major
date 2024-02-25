@@ -58,6 +58,15 @@ def recommend_products(gender,ingredient_list, category, product_df, allowed_val
     updated_ingredient_df = updated_ingredient_df.dropna(axis=0)
     product_ingredients = product_ingredients.dropna(axis=0)
 
+    def clean_ingredient_values(df):
+        cleaned_df = df.copy()
+        for col in df.columns:
+            cleaned_df[col] = df[col].apply(lambda x: re.sub(r"[^\d\-+\.]", "", str(x)))
+        return cleaned_df
+
+    product_ingredients = clean_ingredient_values(product_ingredients)
+    # print(updated_ingredient_list)
+    # print(product_ingredients)
     if updated_ingredient_df.empty or product_ingredients.empty:
         print("Insufficient data after removing NaN values.")
     else:

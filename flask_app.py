@@ -23,6 +23,7 @@ def get_recommendations():
     ingredient_list = data.get('ingredient_list')
     ingredients = convert_string_to_dict(ingredient_list)
     category = data.get('category')
+    print(gender, category, ingredients)
 
     # Call the recommendation function
     recommended_products_result = recommend_products(gender, ingredients, category, product_df, allowed_values_df)

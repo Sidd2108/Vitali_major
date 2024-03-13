@@ -13,7 +13,7 @@ def dollars_to_rupees(dollar_price_str):
         
         rupee_price = dollar_price * 82.93
         
-        return f"₹{rupee_price:.2f}"
+        return f"Rs.{rupee_price:.2f}"
     else:
         # Handle the case when no numeric part is found in the input string
         return "Invalid input for dollar_price"
@@ -70,10 +70,6 @@ def recommend_products(gender,ingredient_list, category, product_df, allowed_val
     if updated_ingredient_df.empty or product_ingredients.empty:
         print("Insufficient data after removing NaN values.")
     else:
-        cosine_similarities_ingredient = cosine_similarity(updated_ingredient_df, product_ingredients)
-        similarity_threshold_ingredient = 0.87
-        similar_product_indices_ingredient = [i for i, sim in enumerate(cosine_similarities_ingredient[0]) if sim > similarity_threshold_ingredient]
-
         vectorizer = CountVectorizer()
         category_matrix = vectorizer.fit_transform([category] + list(product_df['Category']))
 
@@ -82,14 +78,12 @@ def recommend_products(gender,ingredient_list, category, product_df, allowed_val
         similarity_threshold_category = 0.8
         similar_product_indices_category = [i for i, sim in enumerate(cosine_similarities_category) if sim > similarity_threshold_category]
 
-        # Find products that are similar in both ingredients and category
-        similar_product_indices = list(set(similar_product_indices_ingredient) & set(similar_product_indices_category))
-
-        if similar_product_indices:
-            
-            recommended_products = product_df.iloc[similar_product_indices]
+        # Find products that are similar in category
+        if similar_product_indices_category:
+            recommended_products = product_df.iloc[similar_product_indices_category]
             recommended_products_subset = recommended_products[["Brand", "Rating", "Flavor", "Price", "Category"]]
 
+            recommended_items = {}
             for _, row in recommended_products_subset.iterrows():
                 brand = row['Brand']
                 if brand not in recommended_items:
@@ -100,10 +94,10 @@ def recommend_products(gender,ingredient_list, category, product_df, allowed_val
                         "Price": dollars_to_rupees(row['Price']),
                         "Category": row['Category']
                     }
-                filtered_details = {k: v for k, v in recommended_items[brand].items() if pd.notna(v) and str(v) != "{{vm.sku.name}}"}
-                if filtered_details :
-                    recommended_items[brand] = filtered_details
-        else:
-            print("No similar products found.")
+                    filtered_details = {k: v for k, v in recommended_items[brand].items() if pd.notna(v) and str(v) != "{{vm.sku.name}}"}
+            if filtered_details:
+                recommended_items[brand] = filtered_details
+            else:
+                print("No similar products found.")
 
     return recommended_items

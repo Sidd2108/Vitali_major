@@ -13,6 +13,10 @@ allowed_values_df = pd.read_csv("backend\dietary_Allowances.csv")
 def hello_world():
     return 'Hello, World!'
 
+@app.route('/recommend', methods = ['GET'])
+def printmsg():
+    return "Works, now try hitting POST request for same url with parameters"
+
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():
     data = request.get_json()

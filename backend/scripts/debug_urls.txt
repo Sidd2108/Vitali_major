@@ -1,0 +1,7 @@
+Amazon : 
+primary : https://www.amazon.in/s?k=health+supplements
+category exmaple : https://www.amazon.in/s?k=health+supplements&rh=n%3A1374492031%2Cn%{category}
+
+FLipkart :
+primary : https://www.flipkart.com/search?q=protein+supplements
+category example : https://www.flipkart.com/search?q=protein+supplements=&p%5B%5D=facets.type%255B%255D%3D{category}

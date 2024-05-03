@@ -4,3 +4,5 @@ scikit-learn
 flask
 flask-cors
 gunicorn
+beautifulsoup4
+requests

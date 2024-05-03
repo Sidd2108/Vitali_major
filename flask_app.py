@@ -3,7 +3,8 @@ import pandas as pd
 from flask_cors import CORS
 from backend.recommender_system import recommend_products
 from backend.convert_units import convert_string_to_dict
-
+from backend.scripts.amzn_scrape import scrape_amzn_products
+from backend.scripts.flpkrt_scrape import scrape_flpkrt_products
 
 app = Flask(__name__)
 CORS(app, resources={r"/recommend": {"origins": "*"}}, allow_headers=["Content-Type", "Authorization"])
@@ -29,11 +30,19 @@ def get_recommendations():
     ingredients = convert_string_to_dict(ingredient_list)
     category = data.get('category')
     # print(gender, category, ingredients)
-
-    # Call the recommendation function
-    recommended_products_result = recommend_products(gender, ingredients, category, product_df, allowed_values_df)
-    # recommended_products_result = jsonify(recommended_products_result)
-    # print(type(recommended_products_result))
+    recommended_products_amzn = scrape_amzn_products(category=category)
+    recommended_products_flpkrt = scrape_flpkrt_products(category=category)
+    # merging two results
+    recommended_products_result = {}
+    all_keys = set(recommended_products_amzn.keys()) | set(recommended_products_flpkrt.keys())
+    for key in all_keys:
+        if key in recommended_products_amzn and key in recommended_products_flpkrt:
+            recommended_products_result[key] = [recommended_products_amzn[key], recommended_products_flpkrt[key]]
+        elif key in recommended_products_amzn:
+            recommended_products_result[key] = [recommended_products_amzn[key]]
+        elif key in recommended_products_flpkrt:
+            recommended_products_result[key] = [recommended_products_flpkrt[key]]
+    
     return recommended_products_result
 
 if __name__ == '__main__':
